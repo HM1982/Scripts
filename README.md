@@ -6,7 +6,7 @@ The files in this repository were used to configure the network depicted below.
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Aelect portions of the YAML file may be used to install only certain pieces of it, such as Filebeat..
 
-  nstall-elk.yml
+  install_elk.yml
   
 ---
 - name: Config Web elk with Docker
@@ -73,6 +73,9 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 Load balancing ensures that the application will be highly avulable, in addition to restricting inbound access to the network.
 he load balancer ensures that work to process incoming traffic will be shared by both vulnerable web servers. Access controls will ensure that only authorized users — namely, ourselves — will be able to connect in the first place.
 
+What is the advantage of a jump box?
+ -A jump box is a secure computer that all admins first connect to before launching any administrative task or use as an origination point to connect to other servers or untrusted environments.
+
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the file systems of the VMs on the network, as well as watch system metrics, such as CPU usage; attempted SSH logins; sudo escalation failures; etc.
  What does Filebeat watch for? Filebeat is a lightweight shipper for forwarding and centralizing log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
 - What does Metricbeat record? Metricbeat takes the metrics and statistics that it collects and ships them to the output that you specify, such as Elasticsearch or Logstash. Metricbeat helps you monitor your servers by collecting metrics from the system and services running on the server, such as: Apache.
@@ -93,7 +96,6 @@ In addition to the above, Azure has provisioned a load balancer in front of all 
 Availability Zone 1: Web-1+ Web-2
 
 Availability Zone 2: ELK
-
 
 ELK Server Configuration
 The ELK VM exposes an Elastic Stack instance. Docker is used to download and manage an ELK container.
@@ -133,60 +135,23 @@ Efficient: Because you don’t need to install any extra software, there’s mor
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
+The playbook implements the following tasks: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc.
+- Install docker.io
+- Install pip3
+- Install Docker python module
+ -Increase virtual memory
+ -Download and launch a docker
+
 ![docker ps](https://user-images.githubusercontent.com/90741065/152872163-7c735e02-d3f7-4bc5-b235-866c80a1b6b5.PNG)
 
--
 
-The playbook is duplicated below.
----
-- name: Config Web elk with Docker
-  hosts: elk
-  remote_user: sysadmin
-  become: true
-  tasks:
-  - name: docker.io
-    apt:
-      force_apt_get: yes
-      update_cache: yes
-      name: docker.io
-      state: present
-
-  - name: Install pip3
-    apt:
-      force_apt_get: yes
-      name: python3-pip
-      state: present
-
-  - name: Install Docker python module
-    pip:
-      name: docker
-      state: present
-  - name: Use more memory
-    sysctl:
-        name: vm.max_map_count
-        value: "262144"
-        state: present
-        reload: yes
-  - name: download and launch a docker web container
-    docker_container:
-      name: elk
-      image: sebp/elk:761
-      state: started
-      published_ports:
-          - 5601:5601
-          - 9200:9200
-          - 5044:5044
-
-  - name: Enable docker service
-    systemd:
-      name: docker
-      enabled: yes
+ 
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- - Name	IP Addresses
-Web-1	10.0.0.9
-Web-2	10.0.0.11
+- - Name    IP Addresses
+   Web-1	    10.0.0.9
+   Web-2	    10.0.0.11
 
 We have installed the following Beats on these machines:
 Filebeat
@@ -239,14 +204,6 @@ SSH into the control node and follow the steps below:
 -Copy the playbooks to the Ansible Control Node
 -Run each playbook on the appropriate targets
 
-
-_The easiest way to copy the playbooks is to use Git:
-$ cd /etc/ansible
-$ mkdir files
-# Clone Repository + IaC Files
-$ git clone https://github.com/TenkiYamada/Project-1-ELK-Stack-Project.git
-# Move Playbooks and hosts file Into `/etc/ansible`
-$ cp /Project-1-ELK-Stack-Project/ReadMe/Playbooks/*
 
 This copies the playbook files to the correct place.
 Next, you must create a hosts file to specify which VMs to run each playbook on. Run the commands below:
