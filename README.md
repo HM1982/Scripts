@@ -8,45 +8,7 @@ These files have been tested and used to generate a live ELK deployment on Azure
 
   install_elk.yml
   
----
-- name: Config Web elk with Docker
-  hosts: elk
-  remote_user: sysadmin
-  become: true
-  tasks:
-  - name: docker.io
-    apt:
-      force_apt_get: yes
-      update_cache: yes
-      name: docker.io
-      state: present
-
-  - name: Install pip3
-    apt:
-      force_apt_get: yes
-      name: python3-pip
-      state: present
-
-  - name: Install Docker python module
-    pip:
-      name: docker
-      state: present
-  - name: Use more memory
-    sysctl:
-        name: vm.max_map_count
-        value: "262144"
-        state: present
-        reload: yes
-  - name: download and launch a docker web container
-    docker_container:
-      name: elk
-      image: sebp/elk:761
-      state: started
-      published_ports:
-          - 5601:5601
-          - 9200:9200
-          - 5044:5044
-
+![image](https://user-images.githubusercontent.com/90741065/152876082-d2d93f1c-7152-433c-abda-23aa05cb21b7.png)
 
 This document contains the following details:
 - Description of the Topologu
