@@ -130,18 +130,13 @@ The playbook below installs Metricbeat on the target hosts. The playbook for ins
 
 
 ### Using the Playbook
-In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
-
+n order to use the playbooks, you will need to have an Ansible control node already configured. We use the jump box for this purpose.
 To use the playbooks, we must perform the following steps:
-SSH into the control node and follow the steps below:
--Copy the playbooks to the Ansible Control Node
--Run each playbook on the appropriate targets
+
+ -Copy the playbooks to the Ansible Control Node
+ -Run each playbook on the appropriate targets
 
 The easiest way to copy the playbooks is to use Git:
-![image](https://user-images.githubusercontent.com/90741065/152875345-ead78e3d-df7d-4d34-ac58-945b5732fe99.png)
-
-This copies the playbook files to the correct place.
-Next, you must create a hosts file to specify which VMs to run each playbook on. Run the commands below:
 ![image](https://user-images.githubusercontent.com/90741065/152875392-088e7973-584d-4b2c-988c-53261e0a0502.png)
 
 This copies the playbook files to the correct place.
