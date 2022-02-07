@@ -204,25 +204,20 @@ SSH into the control node and follow the steps below:
 -Copy the playbooks to the Ansible Control Node
 -Run each playbook on the appropriate targets
 
+The easiest way to copy the playbooks is to use Git:
+![image](https://user-images.githubusercontent.com/90741065/152875345-ead78e3d-df7d-4d34-ac58-945b5732fe99.png)
 
 This copies the playbook files to the correct place.
 Next, you must create a hosts file to specify which VMs to run each playbook on. Run the commands below:
-$ cd /etc/ansible
-$ cat > hosts <<EOF
-[webservers]
-10.0.0.9
-10.0.0.11
-10.0.0.12
+![image](https://user-images.githubusercontent.com/90741065/152875392-088e7973-584d-4b2c-988c-53261e0a0502.png)
 
-[elk]
-10.2.0.6
-EOF
+This copies the playbook files to the correct place.
+Next, you must create a hosts file to specify which VMs to run each playbook on. Run the commands below:
+![image](https://user-images.githubusercontent.com/90741065/152875601-8b601c65-3a33-4397-9fb2-d80afa8a2d78.png)
 
 - After this, the commands below run the playbook:
-$ cd /etc/ansible
-$ ansible-playbook install_elk.yml elk
-$ ansible-playbook install_filebeat.yml webservers
-$ ansible-playbook install_metricbeat.yml webservers
+- ![image](https://user-images.githubusercontent.com/90741065/152875768-31644b2e-1ce8-4013-86a9-b17cee5df4f7.png)
+
 
 o verify success, wait five minutes to give ELK time to start up.
 Then, run: curl http://52.165.158.70:5601. This is the address of Kibana. If the installation succeeded, this command should print HTML to the console.
