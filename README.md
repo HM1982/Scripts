@@ -148,4 +148,4 @@ Next, you must create a hosts file to specify which VMs to run each playbook on.
 
 
 o verify success, wait five minutes to give ELK time to start up.
-Then, run: curl http://52.165.158.70:5601. This is the address of Kibana. If the installation succeeded, this command should print HTML to the console.
+Then, run: curl http://13.89.188.123:5601. This is the address of Kibana. If the installation succeeded, this command should print HTML to the console.
