@@ -126,37 +126,8 @@ These Beats allow us to collect the following information from each machine:
 -Packetbeat: Packetbeat collects packets that pass through the NIC, similar to Wireshark. We use it to generate a trace of all activity that takes place on the network, in case later forensic analysis should be warranted.
 
 The playbook below installs Metricbeat on the target hosts. The playbook for installing Filebeat is not included, but looks essentially identical — simply replace metricbeat with filebeat, and it will work as expected.
+![image](https://user-images.githubusercontent.com/90741065/152876466-7e4f506d-eb10-4555-a9a2-4d4960374452.png)
 
-----
-- name: Installing and launching filebeat
-  hosts: webservers
-  become: yes
-  tasks:
-
-  - name: Download filebeat .deb file
-    command: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
-
-  - name: Install filebeat .deb
-    command: dpkg -i filebeat-7.4.0-amd64.deb
-
-  - name: Drop in filebeat.yml
-    copy:
-      src: /etc/ansible/filebeat-config.yml
-      dest: /etc/filebeat/filebeat.yml
-
-  - name: Enable and configure system module
-    command: filebeat modules enable system
-
-  - name: Setup filebeat
-    command: filebeat setup
-
-  - name: Start filebeat service
-    command: service filebeat start
-
-  - name: Enable service filebeat on boot
-    systemd:
-      name: filebeat
-      enabled: yes
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
